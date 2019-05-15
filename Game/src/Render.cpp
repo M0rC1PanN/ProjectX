@@ -5,8 +5,6 @@
 void App::Render()
 {
 	SDL_RenderClear(renderer);
-	int bW, bH;
-	SDL_QueryTexture(background, NULL, NULL, &bW, &bH);
 
 	float tmpX = WWIDTH / TILE_SIZE / 2, tmpY = WHEIGHT / TILE_SIZE / 2;
 
@@ -28,6 +26,15 @@ void App::Render()
 		SDL_Delay(5000);
 	}
 	
+	SDL_RenderPresent(renderer);
+	SDL_Delay(1);
+}
+
+void App::MenuRender() {
+	SDL_RenderClear(renderer);
+	//background = LoadImage("Pictures/background.bmp", renderer);
+	DrawTexture(menu_background, renderer, 300, 100, 0, 0, background_width, background_height);
+	//SDL_SetRenderDrawColor(renderer, 55, 55, 55, 155);
 	SDL_RenderPresent(renderer);
 	SDL_Delay(1);
 }

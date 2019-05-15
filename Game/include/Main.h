@@ -26,11 +26,11 @@ private:
 private:
 	Animation							Anim_Yoshi;
 	bool Running;
-	bool menu = true;
 	int timeCounter;
+	int background_width, background_height;
 	SDL_Surface*						ScreenSurface;
 	SDL_Window*							Window;
-	SDL_Texture*						background;
+	SDL_Texture*						menu_background;
 	SDL_Renderer*						renderer;
 	std::map < std::string, bool >		flags;
 	Instruments							tools;
@@ -46,6 +46,7 @@ public:
 	void onEvent(SDL_Event* Event); // Функция, отвечаеющая на действие игрока
 	void Loop(); // Подготавливает данные для рендеринга, после какого-то ивента(обновляет ХП, местоположение мобов)
 	void Render(); // Из названия понятно
+	void MenuRender();
 	void OnExit(); // Выйди и зайди нормально
 	void Generator(); // Генератор ы
 	void OnKeyDown(SDL_Keycode sym, int mod, int unicode);

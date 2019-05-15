@@ -15,5 +15,5 @@ void App::Loop()
 }
 
 void App::MenuLoop() {
-	SDL_UpdateWindowSurface(Window);
+	
 }
