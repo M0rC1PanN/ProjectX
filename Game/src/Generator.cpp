@@ -135,7 +135,7 @@ void App::GenerateHills(std::array< std::array<Tile_type, MAP_HBLOCK>, MAP_WBLOC
 			break;
 		}
 		case UP: {
-			height = std::max(5, -1 * height_gen(gen) + cur_y);
+			height = std::max(jump, -1 * height_gen(gen) + cur_y);
 			while (cur_y != height && cur_x <= MAP_WBLOCK - 1) {
 				length = std::min(length_gen(gen), MAP_WBLOCK - 1 - cur_x);
 				int bound = cur_x + length;

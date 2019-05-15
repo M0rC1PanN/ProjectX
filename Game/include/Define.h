@@ -23,6 +23,7 @@ const float STEP = 0.2;
 const float EPS = 0.001;
 const float EPS_SPEED = 0.00001;
 const int second = 1000;
+const int jump = 7;
 
 const int NUM_AGR_NPC = 10;
 
