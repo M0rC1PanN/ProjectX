@@ -12,6 +12,7 @@ App::App()
 	renderer = nullptr;
 	Running = true;
 	background = nullptr;
+
 }
 
 int App::StartGame()

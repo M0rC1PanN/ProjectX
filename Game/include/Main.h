@@ -26,8 +26,9 @@ private:
 private:
 	Animation							Anim_Yoshi;
 	bool Running;
-	bool menu = false;
+	bool menu = true;
 	int timeCounter;
+	SDL_Surface*						ScreenSurface;
 	SDL_Window*							Window;
 	SDL_Texture*						background;
 	SDL_Renderer*						renderer;
