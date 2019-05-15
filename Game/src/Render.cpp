@@ -43,6 +43,13 @@ void App::MenuRender() {
 	SDL_Delay(1);
 }
 
+void App::MinimapRender() {
+	SDL_RenderClear(renderer);
+	Game_Map.MinimapOnRender(renderer);
+	SDL_RenderPresent(renderer);
+	SDL_Delay(1);
+}
+
 void App::SettingsRender() {
 	SDL_RenderClear(renderer);
 	DrawTexture(menu_background, renderer, 100, 100, 0, 0, background_width, background_height);

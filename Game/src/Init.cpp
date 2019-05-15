@@ -59,7 +59,7 @@ bool App::Init()
 			return false;
 		}
 	}
-
+	App::Game_Map.InitializeWithFalse();
 	App::Game_Map.OnLoad("Maps/1.map", renderer);
 
 	return true;

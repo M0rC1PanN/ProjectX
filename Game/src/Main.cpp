@@ -34,8 +34,13 @@ int App::StartGame()
 				onEvent(&CurEvent);
 			}
 			if (!flags["ESCAPE"]) {
-				Loop();
-				Render();
+				if (flags["TAB"]) {
+					MinimapRender();
+				}
+				else {
+					Loop();
+					Render();
+				}
 			}
 			else if (flags["SETTINGS"]) {
 				SettingsRender();

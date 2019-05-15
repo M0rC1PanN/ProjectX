@@ -1,6 +1,7 @@
 #include "pch.h"
 
 #include "Map.h"
+#include "Main.h"
 
 Map::Map() {
 	Tiles_Textures = backgrounds = nullptr;
@@ -54,6 +55,9 @@ void Map::OnRender(SDL_Renderer* renderer, float MapX, float MapY)
 			if (curX < MAP_WBLOCK && curY < MAP_HBLOCK && curX >= 0 && curY >= 0 && MAP[curX][curY].TypeID != TILE_TYPE_NONE) {
 				if (MAP[curX][curY].TextureID != TILE_TEXT_NONE) {
 					float cut_size = 2;
+					visible_blocks[X][Y] = true;
+					width_of_minimap = std::max(width_of_minimap, X * 5);
+					height_of_minimap = std::max(height_of_minimap, Y * 5);
 					for (float i = 0; i < cut_size; ++i) {
 						for (float j = 0; j < cut_size; ++j) {
 							DrawTexture(Tiles_Textures, renderer, X1 + i * TILE_SIZE / cut_size, Y1 + j * TILE_SIZE / cut_size, 0 + i * TILE_SIZE / cut_size, MAP[curX][curY].TextureID * TILE_SIZE + j * TILE_SIZE / cut_size, TILE_SIZE / cut_size, TILE_SIZE / cut_size);
@@ -76,4 +80,26 @@ void Map::OnRender(SDL_Renderer* renderer, float MapX, float MapY)
 void Map::OnCleanup()
 {
 	SDL_DestroyTexture(Tiles_Textures);
+}
+
+void Map::InitializeWithFalse() {
+	for (int i = 0; i < MAP_WBLOCK; i++) {
+		for (int j = 0; j < MAP_HBLOCK; j++) {
+			visible_blocks[i][j] = false;
+		}
+	}
+}
+
+void Map::MinimapOnRender(SDL_Renderer* renderer) {
+	for (float x = 1; x < MAP_WBLOCK - 1; x++) {
+		for (float y = 0; y < MAP_HBLOCK - 1; y++) {
+			if (visible_blocks[x][y] && App::Game_Map.MAP[x][y].TypeID == TILE_TYPE_BLOCK) {
+				DrawTexture(Tiles_Textures, renderer, 960 - width_of_minimap / 2 + x * 5, 540 - height_of_minimap / 2 + y * 5, 3, 3, 5, 5);
+				//DrawTexture(menu_background, renderer, 300, 100, 0, 0, backgrou nd_width, background_height);
+			}
+		}
+	}
+	SDL_Texture* pers = LoadImage("Pictures/Green.bmp", renderer);
+	DrawTexture(pers, renderer, 960 - width_of_minimap / 2 + App::Hero.X * 5 - 10, 540 - height_of_minimap / 2 + App::Hero.Y * 5 - 10, 3, 3, 20, 20);
+	SDL_DestroyTexture(pers);
 }

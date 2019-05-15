@@ -119,6 +119,7 @@ void App::OnKeyDown(SDL_Keycode sym, int mod, int unicode){
 		case SDLK_d:		flags["D"] = true; break;
 		case SDLK_SPACE:	flags["SPACE"] = true; break;
 		case SDLK_ESCAPE:	flags["ESCAPE"] ^= true; break;
+		case SDLK_TAB:		flags["TAB"] ^= true; break;
 
 		default: {
 		}

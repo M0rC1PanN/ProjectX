@@ -51,6 +51,7 @@ public:
 	void Loop(); // Подготавливает данные для рендеринга, после какого-то ивента(обновляет ХП, местоположение мобов)
 	void Render(); // Из названия понятно
 	void MenuRender();
+	void MinimapRender();
 	void SettingsRender();
 	void OnExit(); // Выйди и зайди нормально
 	void Generator(); // Генератор ы
