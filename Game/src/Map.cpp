@@ -36,7 +36,6 @@ bool Map::OnLoad(std::string File, SDL_Renderer* renderer)
 			fscanf(FileMap, "%d:%d ", &MAP[i][j].TextureID, &MAP[i][j].TypeID);
 		}
 	}
-
 	fclose(FileMap);
 	return true;
 }

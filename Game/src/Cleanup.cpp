@@ -4,7 +4,7 @@
 
 void App::Cleanup()
 {
-	for (int i = 0; i < NUM_AGR_NPC; ++i) {
+	for (int i = 0; i < Agr_NPC.size(); ++i) {
 		Agr_NPC[i].Entity::OnCleanup();
 	}
 	for (int i = 0; i < (int)Entity::EntityList.size(); i++) {

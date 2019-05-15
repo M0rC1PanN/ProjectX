@@ -23,6 +23,7 @@
 class App : public Events{
 private:
 	std::vector<AgressiveNPC>			Agr_NPC;
+	std::vector<Bullet>					Bullets;
 private:
 	Animation							Anim_Yoshi;
 	bool Running;
@@ -34,12 +35,13 @@ private:
 	SDL_Texture*						menu_buttons;
 	SDL_Renderer*						renderer;
 	std::map < std::string, bool >		flags;
-	Instruments							tools;
 	HealthBar							HPbar;
 public:
+	static Instruments					tools;
 	static Map							Game_Map;
 	static MainHero						Hero;
 	static GameTime						Game_time;
+	static PlayMode						mode;
 
 	int illumination = 0;
 	int complexity = 0;
@@ -65,6 +67,7 @@ public:
 	void startTimer();
 	Uint32 getDiff();
 	void MenuLoop();
+	void DrawBullet(SDL_Renderer* renderer, float X, float Y);
 public:
 	int countAliveNeighbours(int &x, int &y, const std::array< std::array<Tile_type, MAP_HBLOCK>, MAP_WBLOCK>& type);
 	void doSimulationStep(std::array< std::array<Tile_type, MAP_HBLOCK>, MAP_WBLOCK>& type, const int& deathLimit, const int& birthLimit, const std::array< std::array<bool, MAP_HBLOCK>, MAP_WBLOCK>& do_not_change);

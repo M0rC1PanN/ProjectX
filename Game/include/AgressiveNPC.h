@@ -17,7 +17,7 @@ enum action {
 	JUMP
 };
 
-class AgressiveNPC : public Entity{
+class AgressiveNPC : public Entity {
 private:
 	Uint32 lastFrameTime;
 	AgroType type;
@@ -26,6 +26,8 @@ private:
 	bool check_after_jump;
 	float prev_X, prev_Y;
 	int damage;
+	float speed_param;
+	int SeeYou;
 public:
 	AgressiveNPC();
 	void OnLoop();
@@ -33,4 +35,15 @@ public:
 	virtual action Trigger();
 	virtual action GenerateAction();
 	Uint32 getDiff();
+};
+
+
+class Bullet {
+public:
+	Bullet();
+	Bullet(float a, float b, std::pair<float, float> c);
+	void OnLoop();
+	void OnRender(SDL_Renderer* renderer, float MapX, float MapY);
+	float x, y;
+	std::pair<float, float> v;
 };

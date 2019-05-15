@@ -5,6 +5,8 @@
 Map	App::Game_Map;
 MainHero App::Hero;
 GameTime App::Game_time;
+Instruments App::tools;
+PlayMode App::mode;
 
 App::App()
 {

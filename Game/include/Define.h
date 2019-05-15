@@ -43,3 +43,8 @@ enum partOfDay {
 	COUNT_PART,
 	NONE_PART
 };
+
+enum PlayMode {
+	DigMode,
+	FightMode
+};

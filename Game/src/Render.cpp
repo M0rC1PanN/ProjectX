@@ -11,7 +11,19 @@ void App::Render()
 	Camera::CameraControl.SetPos(Hero.X - tmpX, Hero.Y - tmpY);
 	App::Game_Map.OnRender(renderer, Camera::CameraControl.GetX(), Camera::CameraControl.GetY());
 
-	for (int i = 0; i < NUM_AGR_NPC; ++i) {
+	for (int i = 0; i < Bullets.size(); ++i) {
+		float bul_x = Bullets[i].x, bul_y = Bullets[i].y;
+		bul_x -= Camera::CameraControl.GetX();
+		bul_y -= Camera::CameraControl.GetY();
+		if (bul_x < 0 || bul_x > MAP_WBLOCK || bul_y < 0 || bul_y > MAP_HBLOCK) {
+			std::swap(Bullets[i], Bullets[Bullets.size() - 1]);
+			Bullets.erase(prev(end(Bullets)));
+			continue;
+		}
+		Bullets[i].OnRender(renderer, Camera::CameraControl.GetX(), Camera::CameraControl.GetY());
+	}
+
+	for (int i = 0; i < (int)Agr_NPC.size(); ++i) {
 		Agr_NPC[i].OnRender(renderer, Camera::CameraControl.GetX(), Camera::CameraControl.GetY());
 	}
 
@@ -25,7 +37,14 @@ void App::Render()
 		SDL_RenderPresent(renderer);
 		SDL_Delay(5000);
 	}
-	
+
+	if (mode == FightMode) {
+		DrawText(renderer, App::tools.ColorBlack, App::tools.FontLeadCoat, "Fight", 10, WHEIGHT - 50, 100, 50);
+	}
+	else if (mode == DigMode) {
+		DrawText(renderer, App::tools.ColorBlack, App::tools.TheJewishBitmap, "Dig", 10, WHEIGHT - 50, 100, 50);
+	}
+
 	SDL_RenderPresent(renderer);
 	SDL_Delay(1);
 }
@@ -65,6 +84,6 @@ void App::SettingsRender() {
 		WWIDTH / 2 - 100, WHEIGHT / 2 - 300 + 2*BYDELTA,
 		0, 6 * BHEIGHT,
 		BWIDTH, BHEIGHT);
-;	SDL_RenderPresent(renderer);
+	SDL_RenderPresent(renderer);
 	SDL_Delay(1);
 }

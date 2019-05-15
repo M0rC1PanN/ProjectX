@@ -27,7 +27,7 @@ public:
 
 	int             Width;
 	int             Height;
-	
+
 	int				side;
 	int             AnimState;
 	type			TypeEntity;
@@ -36,6 +36,7 @@ public:
 	float			speedr;
 	float			speedf;
 	bool			STAY;
+	bool			dead;
 	bool			CAN_JUMP;
 
 	int				HP, MaxHP;

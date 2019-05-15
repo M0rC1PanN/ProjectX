@@ -14,7 +14,7 @@ Entity::Entity() {
 
 	X = Y = 0.0f;
 	CAN_JUMP = true;
-
+	dead = false;
 	Width = Height = 0;
 	STAY = true;
 	FLYING = speedr = speedf = 0.f;
@@ -43,8 +43,11 @@ bool Entity::OnLoad(std::string File, SDL_Renderer* renderer, int Width, int Hei
 }
 
 void Entity::OnLoop() {
+	if (HP <= 0) {
+		dead = true;
+	}
 	int cur_time = SDL_GetTicks();
-	if (cur_time - time_of_last_damage > 15 * second 
+	if (cur_time - time_of_last_damage > 15 * second
 		&& cur_time - time_of_last_add_hp > second) {
 		AddHP(1);
 		time_of_last_add_hp = cur_time;

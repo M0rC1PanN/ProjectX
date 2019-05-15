@@ -61,7 +61,7 @@ bool DrawTexture(SDL_Texture* tex, SDL_Renderer* rend, float X, float Y, float X
 	SrcR.w = W;
 	SrcR.h = H;
 
-	//ChooseColor(tex, X, Y);
+	// ChooseColor(tex, X, Y);
 	SDL_RenderCopy(rend, tex, &SrcR, &DestR);
 	return true;
 }
@@ -96,4 +96,9 @@ void DrawText(SDL_Renderer* rend, SDL_Color color, TTF_Font* font, std::string t
 	SDL_RenderCopy(rend, Message, NULL, &Message_rect);
 	SDL_FreeSurface(surfaceMessage);
 	SDL_DestroyTexture(Message);
+}
+
+void DrawBullet(SDL_Renderer* renderer, float X, float Y) {
+	SDL_Texture* tex = LoadImage("Pictures/Bullet_proof.bmp", renderer);
+	DrawTexture(X, Y, tex, renderer);
 }

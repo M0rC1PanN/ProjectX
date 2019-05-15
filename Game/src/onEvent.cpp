@@ -102,12 +102,17 @@ void App::OnLButtonDown(int mX, int mY) {
 	}
 	
 	int x = round(Camera::CameraControl.GetX()) + mX / TILE_SIZE, y = round(Camera::CameraControl.GetY()) + mY / TILE_SIZE;
-	if (fabs(Hero.X - x) <= 2 && fabs(Hero.Y - y) <= 2 &&
-		x >= 0 && x < MAP_WBLOCK && y >= 0 && y < MAP_HBLOCK &&
-		Game_Map.MAP[x][y].TypeID == TILE_TYPE_BLOCK) {
-
-		Game_Map.MAP[x][y].TypeID = TILE_TYPE_NONE;
-		Game_Map.MAP[x][y].TextureID = TILE_TEXT_NONE;
+	if (mode == DigMode) {
+		if (fabs(Hero.X - x) <= 2 && fabs(Hero.Y - y) <= 2 &&
+			x >= 0 && x < MAP_WBLOCK && y >= 0 && y < MAP_HBLOCK &&
+			Game_Map.MAP[x][y].TypeID == TILE_TYPE_BLOCK) {
+			Game_Map.MAP[x][y].TypeID = TILE_TYPE_NONE;
+			Game_Map.MAP[x][y].TextureID = TILE_TEXT_NONE;
+		}
+	}
+	else if (mode == FightMode) {
+		float length = sqrt((y - App::Hero.Y)*(y - App::Hero.Y) + (x - App::Hero.X)*(x - App::Hero.X));
+		Bullets.push_back(Bullet(App::Hero.X, App::Hero.Y, { (x - App::Hero.X) / length , (y - App::Hero.Y) / length }));
 	}
 }
 
@@ -120,7 +125,8 @@ void App::OnKeyDown(SDL_Keycode sym, int mod, int unicode){
 		case SDLK_SPACE:	flags["SPACE"] = true; break;
 		case SDLK_ESCAPE:	flags["ESCAPE"] ^= true; break;
 		case SDLK_TAB:		flags["TAB"] ^= true; break;
-
+		case SDLK_1:		mode = FightMode; break;
+		case SDLK_2:		mode = DigMode;	break;
 		default: {
 		}
 		}

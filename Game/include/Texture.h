@@ -13,3 +13,4 @@ bool DrawTexture(SDL_Texture* tex, SDL_Renderer* rend, float X, float Y, float X
 float MagicFunction(float X, float Y, float xH, float yH);
 void ChooseColor(SDL_Texture* tex, float X, float Y);
 void DrawText(SDL_Renderer* rend, SDL_Color color, TTF_Font* font, std::string text, float X, float Y, float width, float height);
+void DrawBullet(SDL_Renderer* rend, float X, float Y);
