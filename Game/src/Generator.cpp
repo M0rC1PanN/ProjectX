@@ -5,6 +5,7 @@
 #include "Main.h"
 #include <random>
 #include <array>
+#include <queue>
 
 int dx[8] = { 1, 1, 1,-1, -1,-1, 0, 0 };
 int dy[8] = { 0,-1, 1, 0, -1, 1, 1,-1 };
@@ -36,6 +37,11 @@ int App::countAliveNeighbours(int &x, int &y, const std::array< std::array<Tile_
 void App::doSimulationStep(std::array< std::array<Tile_type, MAP_HBLOCK>, MAP_WBLOCK>& type, const int& deathLimit, const int& birthLimit,
 	const std::array< std::array<bool, MAP_HBLOCK>, MAP_WBLOCK>& do_not_change) {
 	std::array< std::array<Tile_type, MAP_HBLOCK>, MAP_WBLOCK> new_type = { TILE_TYPE_NONE };
+	for (int x = 0; x < MAP_WBLOCK; x++) {
+		for (int y = 0; y < MAP_HBLOCK; y++) {
+			new_type[x][y] = type[x][y];
+		}
+	}
 	for (int x = 0; x < MAP_WBLOCK; ++x) {
 		for (int y = 0; y < MAP_HBLOCK; ++y) {
 			if (!do_not_change[x][y]) {
@@ -119,25 +125,25 @@ void App::GenerateHills(std::array< std::array<Tile_type, MAP_HBLOCK>, MAP_WBLOC
 			repeat = repeat_gen(gen);
 			int bound = std::min(cur_x + repeat, MAP_WBLOCK - 1);
 			for (cur_x; cur_x <= bound; cur_x++) {
-				for (int y = cur_y; y < surface_level; y++) {
+				for (int y = cur_y; y < cave_level; y++) {
 					type[cur_x][y] = TILE_TYPE_BLOCK;
 				}
-				for (int y = 0; y < cur_y + 10; y++) {
+				for (int y = 0; y < cur_y + 5; y++) {
 					do_not_change[cur_x][y] = true;
 				}
 			}
 			break;
 		}
 		case UP: {
-			height = std::max(5, -1 * height_gen(gen) + cur_y);
+			height = std::max(jump, -1 * height_gen(gen) + cur_y);
 			while (cur_y != height && cur_x <= MAP_WBLOCK - 1) {
 				length = std::min(length_gen(gen), MAP_WBLOCK - 1 - cur_x);
 				int bound = cur_x + length;
 				for (cur_x; cur_x <= bound; cur_x++) {
-					for (int y = cur_y; y < surface_level; y++) {
+					for (int y = cur_y; y < cave_level; y++) {
 						type[cur_x][y] = TILE_TYPE_BLOCK;
 					}
-					for (int y = 0; y < cur_y + 10; y++) {
+					for (int y = 0; y < cur_y + 5; y++) {
 						do_not_change[cur_x][y] = true;
 					}
 				}
@@ -151,10 +157,10 @@ void App::GenerateHills(std::array< std::array<Tile_type, MAP_HBLOCK>, MAP_WBLOC
 				length = std::min(length_gen(gen), MAP_WBLOCK - 1 - cur_x);
 				int bound = cur_x + length;
 				for (cur_x; cur_x <= bound; cur_x++) {
-					for (int y = cur_y; y < surface_level; y++) {
+					for (int y = cur_y; y < cave_level; y++) {
 						type[cur_x][y] = TILE_TYPE_BLOCK;
 					}
-					for (int y = 0; y < cur_y + 10; y++) {
+					for (int y = 0; y < cur_y + 5; y++) {
 						do_not_change[cur_x][y] = true;
 					}
 				}
@@ -164,7 +170,50 @@ void App::GenerateHills(std::array< std::array<Tile_type, MAP_HBLOCK>, MAP_WBLOC
 		}
 		}
 	}
+}
 
+void App::DeleteHoles(std::array< std::array<Tile_type, MAP_HBLOCK>, MAP_WBLOCK >& type) {
+	static std::array< std::array<bool, MAP_HBLOCK>, MAP_WBLOCK> used = { false };
+	std::vector < std::pair<int, int> > del;
+	std::queue < std::pair<int, int> > q;
+	for (int x = 0; x < MAP_WBLOCK; ++x) {
+		for (int y = 0; y < MAP_HBLOCK; ++y) {
+			bool ret = true;
+			del.clear();
+			if (!used[x][y] && type[x][y] == TILE_TYPE_NONE) {
+				used[x][y] = true;
+				q.push({ x, y });
+				del.push_back({ x, y });
+				int k = 1;
+				int dX[4] = { 1, 0, -1, 0 };
+				int dY[4] = { 0, -1, 0, 1 };
+				while (!q.empty()) {
+					int x = q.front().first, y = q.front().second;
+					q.pop();
+					for (int i = 0; i < 4; ++i) {
+						int nx = x + dX[i], ny = y + dY[i];
+						if (nx >= 0 && nx < MAP_WBLOCK && ny >= 0 && ny < MAP_HBLOCK
+							&& !used[nx][ny] && type[nx][ny] == TILE_TYPE_NONE) {
+							used[nx][ny] = true;
+							q.push({ nx, ny });
+							k++;
+							if (k <= 500) {
+								del.push_back({ nx, ny });
+							}
+							else {
+								ret = false;
+							}
+						}
+					}
+				}
+			}
+			if (ret) {
+				for (int i = 0; i < del.size(); ++i) {
+					type[del[i].first][del[i].second] = TILE_TYPE_BLOCK;
+				}
+			}
+		}
+	}
 }
 
 void App::Generator()
@@ -172,17 +221,13 @@ void App::Generator()
 	FILE *kek = fopen("Maps/1.map", "w");
 
 	static std::array< std::array<Tile_type, MAP_HBLOCK>, MAP_WBLOCK > type = { TILE_TYPE_NONE };
-	static std::array< std::array<Tile_text, MAP_HBLOCK>, MAP_WBLOCK > text = { TILE_TEXT_NONE };
+	static std::array< std::array<Tile_text, MAP_HBLOCK>, MAP_WBLOCK > text;
 	static std::array< std::array<bool, MAP_HBLOCK>, MAP_WBLOCK> do_not_change = { false };
-
-	//for (int x = 0; x < MAP_WBLOCK; ++x) {
-	//	for (int y = surface_level; y <= surface_level + 10; ++y) {
-	//		type[y][x] = 
-	//	}
-	//}
 
 	GenerateHills(type, text, do_not_change);
 	GenerateRandomCaveLevel(type, text, do_not_change);
+	DeleteHoles(type);
+
 	for (int x = 0; x < MAP_WBLOCK; ++x) {
 		for (int y = 0; y < MAP_HBLOCK; ++y) {
 			/////////////////////////////////////

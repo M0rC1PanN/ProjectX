@@ -65,4 +65,5 @@ public:
 		const std::array< std::array<bool, MAP_HBLOCK>, MAP_WBLOCK>& do_not_change);
 	void GenerateHills(std::array< std::array<Tile_type, MAP_HBLOCK>, MAP_WBLOCK >& type, std::array< std::array<Tile_text, MAP_HBLOCK>, MAP_WBLOCK >& text,
 		std::array< std::array<bool, MAP_HBLOCK>, MAP_WBLOCK>& do_not_change);
+	void DeleteHoles(std::array< std::array<Tile_type, MAP_HBLOCK>, MAP_WBLOCK >& type);
 };

@@ -61,7 +61,7 @@ bool DrawTexture(SDL_Texture* tex, SDL_Renderer* rend, float X, float Y, float X
 	SrcR.w = W;
 	SrcR.h = H;
 
-	ChooseColor(tex, X, Y);
+	//ChooseColor(tex, X, Y);
 	SDL_RenderCopy(rend, tex, &SrcR, &DestR);
 	return true;
 }
