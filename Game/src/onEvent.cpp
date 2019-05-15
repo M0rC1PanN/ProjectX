@@ -68,7 +68,7 @@ void App::CheckFlags() {
 	}
 	if (flags["SPACE"] == true) {
 		if (Hero.STAY && Hero.CAN_JUMP) {
-			Hero.FLYING = 10, Hero.CAN_JUMP = false;
+			Hero.FLYING = 7, Hero.CAN_JUMP = false;
 		}
 	}
 }

@@ -26,8 +26,9 @@ const int second = 1000;
 
 const int NUM_AGR_NPC = 10;
 
-//const int cave_level = 30;
+const int cave_level = 53;
 const int surface_level = 50;
+
 
 enum partOfDay {
 	MORNING,
