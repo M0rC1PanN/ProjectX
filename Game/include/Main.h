@@ -40,6 +40,9 @@ public:
 	static Map							Game_Map;
 	static MainHero						Hero;
 	static GameTime						Game_time;
+
+	int illumination = 0;
+	int complexity = 0;
 public:
 	App();
 	~App() {};
@@ -48,6 +51,7 @@ public:
 	void Loop(); // Подготавливает данные для рендеринга, после какого-то ивента(обновляет ХП, местоположение мобов)
 	void Render(); // Из названия понятно
 	void MenuRender();
+	void SettingsRender();
 	void OnExit(); // Выйди и зайди нормально
 	void Generator(); // Генератор ы
 	void OnKeyDown(SDL_Keycode sym, int mod, int unicode);

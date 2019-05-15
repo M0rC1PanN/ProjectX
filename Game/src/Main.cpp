@@ -27,7 +27,7 @@ int App::StartGame()
 	while (Running)
 	{
 		startTimer();
-		while(getDiff() < 1000 / FPS)
+		while (getDiff() < 1000 / FPS)
 		{
 			while (SDL_PollEvent(&CurEvent))
 			{
@@ -37,9 +37,13 @@ int App::StartGame()
 				Loop();
 				Render();
 			}
+			else if (flags["SETTINGS"]) {
+				SettingsRender();
+			}
 			else {
 				MenuRender();
 			}
+
 		}
 	}
 

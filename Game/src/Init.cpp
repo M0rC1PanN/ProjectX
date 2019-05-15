@@ -5,6 +5,7 @@
 bool App::Init()
 {
 	flags["ESCAPE"] = true;
+	flags["SETTINGS"] = false;
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 	{
 		std::cout << "ERROR: " << SDL_GetError() << "\n";

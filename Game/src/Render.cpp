@@ -42,3 +42,22 @@ void App::MenuRender() {
 	SDL_RenderPresent(renderer);
 	SDL_Delay(1);
 }
+
+void App::SettingsRender() {
+	SDL_RenderClear(renderer);
+	DrawTexture(menu_background, renderer, 100, 100, 0, 0, background_width, background_height);
+	DrawTexture(menu_buttons, renderer,
+				WWIDTH / 2 - 100, WHEIGHT / 2 - 300,
+				illumination * BWIDTH, 4 * BHEIGHT,
+				BWIDTH, BHEIGHT);
+	DrawTexture(menu_buttons, renderer,
+		WWIDTH / 2 - 100, WHEIGHT / 2 - 300 + BYDELTA,
+		complexity * BWIDTH, 5 * BHEIGHT,
+		BWIDTH, BHEIGHT);
+	DrawTexture(menu_buttons, renderer,
+		WWIDTH / 2 - 100, WHEIGHT / 2 - 300 + 2*BYDELTA,
+		0, 6 * BHEIGHT,
+		BWIDTH, BHEIGHT);
+;	SDL_RenderPresent(renderer);
+	SDL_Delay(1);
+}
