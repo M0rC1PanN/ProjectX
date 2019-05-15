@@ -26,6 +26,7 @@ private:
 private:
 	Animation							Anim_Yoshi;
 	bool Running;
+	bool menu = false;
 	int timeCounter;
 	SDL_Window*							Window;
 	SDL_Texture*						background;
@@ -55,6 +56,7 @@ public:
 	void CheckFlags();
 	void startTimer();
 	Uint32 getDiff();
+	void MenuLoop();
 public:
 	int countAliveNeighbours(int &x, int &y, const std::array< std::array<Tile_type, MAP_HBLOCK>, MAP_WBLOCK>& type);
 	void doSimulationStep(std::array< std::array<Tile_type, MAP_HBLOCK>, MAP_WBLOCK>& type, const int& deathLimit, const int& birthLimit, const std::array< std::array<bool, MAP_HBLOCK>, MAP_WBLOCK>& do_not_change);

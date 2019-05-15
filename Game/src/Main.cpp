@@ -32,8 +32,13 @@ int App::StartGame()
 			{
 				onEvent(&CurEvent);
 			}
-			Loop();
-			Render();
+			if (!menu) {
+				Loop();
+				Render();
+			}
+			else {
+				MenuLoop();
+			}
 		}
 	}
 

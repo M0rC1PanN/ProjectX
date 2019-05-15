@@ -13,3 +13,6 @@ void App::Loop()
 	Hero.OnLoop();
 	HPbar.OnLoop(Hero.HP);
 }
+
+void App::MenuLoop() {
+}

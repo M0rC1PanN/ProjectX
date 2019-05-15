@@ -40,7 +40,7 @@ bool Map::OnLoad(std::string File, SDL_Renderer* renderer)
 	return true;
 }
 
-void Map::OnRender(SDL_Renderer* renderer, partOfDay part, float MapX, float MapY)
+void Map::OnRender(SDL_Renderer* renderer, float MapX, float MapY)
 {
 	//std::cout << std::setprecision(5) << MapX << ' ' << MapY << '\n';
 	for (float X = MapX - 1; X <= MapX + WWIDTH / TILE_SIZE; ++X)
@@ -56,7 +56,7 @@ void Map::OnRender(SDL_Renderer* renderer, partOfDay part, float MapX, float Map
 					float cut_size = 2;
 					for (float i = 0; i < cut_size; ++i) {
 						for (float j = 0; j < cut_size; ++j) {
-							DrawTexture(Tiles_Textures, renderer, X1 + i * TILE_SIZE / cut_size, Y1 + j * TILE_SIZE / cut_size, 0 + i * TILE_SIZE / cut_size, MAP[curX][curY].TextureID * TILE_SIZE + j * TILE_SIZE / cut_size, TILE_SIZE / cut_size, TILE_SIZE / cut_size, part);
+							DrawTexture(Tiles_Textures, renderer, X1 + i * TILE_SIZE / cut_size, Y1 + j * TILE_SIZE / cut_size, 0 + i * TILE_SIZE / cut_size, MAP[curX][curY].TextureID * TILE_SIZE + j * TILE_SIZE / cut_size, TILE_SIZE / cut_size, TILE_SIZE / cut_size);
 						}
 					}
 				}
@@ -65,7 +65,7 @@ void Map::OnRender(SDL_Renderer* renderer, partOfDay part, float MapX, float Map
 				float cut_size = 4;
 				for (float i = 0; i < cut_size; ++i) {
 					for (float j = 0; j < cut_size; ++j) {
-						DrawTexture(backgrounds, renderer, X1 + i * TILE_SIZE / cut_size, Y1 + j * TILE_SIZE / cut_size, X1 + i * TILE_SIZE / cut_size, Y1 + j * TILE_SIZE / cut_size, TILE_SIZE / cut_size, TILE_SIZE / cut_size, part);
+						DrawTexture(backgrounds, renderer, X1 + i * TILE_SIZE / cut_size, Y1 + j * TILE_SIZE / cut_size, X1 + i * TILE_SIZE / cut_size, Y1 + j * TILE_SIZE / cut_size, TILE_SIZE / cut_size, TILE_SIZE / cut_size);
 					}
 				}
 			}

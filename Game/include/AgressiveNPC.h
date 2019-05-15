@@ -29,7 +29,7 @@ private:
 public:
 	AgressiveNPC();
 	void OnLoop();
-	void OnRender(SDL_Renderer* renderer, partOfDay, float, float);
+	void OnRender(SDL_Renderer* renderer, float, float);
 	virtual action Trigger();
 	virtual action GenerateAction();
 	Uint32 getDiff();

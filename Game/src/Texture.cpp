@@ -20,7 +20,7 @@ SDL_Texture* LoadImage(std::string file, SDL_Renderer* renderer) {
 	return texture;
 }
 
-void DrawTexture(float x, float y, SDL_Texture* tex, SDL_Renderer* rend, partOfDay part)
+void DrawTexture(float x, float y, SDL_Texture* tex, SDL_Renderer* rend)
 {
 	SDL_Rect pos;
 
@@ -41,7 +41,7 @@ void DrawTexture(float x, float y, SDL_Texture* tex, SDL_Renderer* rend, partOfD
 	SDL_RenderCopy(rend, tex, NULL, &pos);
 }
 
-bool DrawTexture(SDL_Texture* tex, SDL_Renderer* rend, float X, float Y, float X2, float Y2, float W, float H, partOfDay part)
+bool DrawTexture(SDL_Texture* tex, SDL_Renderer* rend, float X, float Y, float X2, float Y2, float W, float H)
 {
 	if (tex == NULL || rend == NULL) {
 		return false;
@@ -61,12 +61,12 @@ bool DrawTexture(SDL_Texture* tex, SDL_Renderer* rend, float X, float Y, float X
 	SrcR.w = W;
 	SrcR.h = H;
 
-	ChooseColor(tex, X, Y, part);
+	ChooseColor(tex, X, Y);
 	SDL_RenderCopy(rend, tex, &SrcR, &DestR);
 	return true;
 }
 
-float MagicFunction(float X, float Y, float xH, float yH, partOfDay Part) {
+float MagicFunction(float X, float Y, float xH, float yH) {
 	int current_diff = abs(App::Game_time.GetTime() - PartDuration / 2);
 	float current_radius = (App::Hero.GetVisionRadius() - 8 * current_diff / (PartDuration / 20));
 	float deep = current_radius / (200.0*current_diff / (PartDuration / 2));
@@ -76,11 +76,11 @@ float MagicFunction(float X, float Y, float xH, float yH, partOfDay Part) {
 	return parameter;
 }
 
-void ChooseColor(SDL_Texture* tex, float X, float Y, partOfDay part) {
+void ChooseColor(SDL_Texture* tex, float X, float Y) {
 	float xH = App::Hero.X - Camera::CameraControl.GetX(), yH = App::Hero.Y - Camera::CameraControl.GetY();
 	X /= TILE_SIZE;
 	Y /= TILE_SIZE;
-	float parameter = MagicFunction(X, Y, xH, yH, part);
+	float parameter = MagicFunction(X, Y, xH, yH);
 	SDL_SetTextureColorMod(tex, parameter, parameter, parameter);
 }
 

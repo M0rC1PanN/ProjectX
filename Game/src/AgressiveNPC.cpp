@@ -99,14 +99,14 @@ action AgressiveNPC::GenerateAction() {
 	return (action)(dis(gen));
 }
 
-void AgressiveNPC::OnRender(SDL_Renderer* renderer, partOfDay part, float MapX, float MapY) {
+void AgressiveNPC::OnRender(SDL_Renderer* renderer, float MapX, float MapY) {
 	float height = WHEIGHT / TILE_SIZE, weight = WWIDTH / TILE_SIZE;
 	float curX = X;
 	float curY = Y;
 	float X1 = (curX - MapX) * TILE_SIZE;
 	float Y1 = (curY - MapY) * TILE_SIZE;
 	if ((X >= MapX - 2 || X <= weight + 2) && (Y >= MapY - 2 || Y <= height + 2)) {
-		DrawTexture(Texture_Entity, renderer, X1, Y1, AnimState * Width, Anim_Control.GetCurrentFrame() * Height + Height * Anim_Control.MaxFrames * side, Width, Height, part);
+		DrawTexture(Texture_Entity, renderer, X1, Y1, AnimState * Width, Anim_Control.GetCurrentFrame() * Height + Height * Anim_Control.MaxFrames * side, Width, Height);
 	}
 }
 
