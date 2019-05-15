@@ -16,7 +16,7 @@ void App::Cleanup()
 	Hero.OnCleanup();
 	App::Game_Map.OnCleanup();
 	SDL_DestroyRenderer(renderer);
-	SDL_DestroyTexture(background);
+	SDL_DestroyTexture(menu_background);
 	SDL_DestroyWindow(Window);
 	SDL_Quit();
 }

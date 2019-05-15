@@ -26,28 +26,20 @@ void App::OnLButtonDown(int mX, int mY) {
 }
 
 void App::OnKeyDown(SDL_Keycode sym, int mod, int unicode){
-	if (!menu) {
 		switch (sym) {
 			//case SDLK_UP:    if (Motion::MoveTo(Hero.X, Hero.Y - 1)) Hero.Y -= STEP; break;
 			//case SDLK_DOWN:  if (Motion::MoveTo(Hero.X, Hero.Y + 1)) Hero.Y += STEP; break;
 		case SDLK_a:		flags["A"] = true; break;
 		case SDLK_d:		flags["D"] = true; break;
 		case SDLK_SPACE:	flags["SPACE"] = true; break;
-		case SDLK_ESCAPE:	menu = 1 - menu; break;
+		case SDLK_ESCAPE:	flags["ESCAPE"] ^= true; break;
 
 		default: {
 		}
 		}
-	}
-	else {
-		if (sym == SDLK_ESCAPE) {
-			menu = 1 - menu;
-		}
-	}
 }
 
 void App::OnKeyUp(SDL_Keycode sym, int mod, int unicode) {
-	if (!menu) {
 		switch (sym) {
 		case SDLK_a:		flags["A"] = false; Hero.speedr = 0; break;
 		case SDLK_d:		flags["D"] = false; Hero.speedr = 0; break;
@@ -56,7 +48,6 @@ void App::OnKeyUp(SDL_Keycode sym, int mod, int unicode) {
 		default: {
 		}
 		}
-	}
 }
 
 void App::CheckFlags() {

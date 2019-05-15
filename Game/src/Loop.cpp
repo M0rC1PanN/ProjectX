@@ -15,4 +15,5 @@ void App::Loop()
 }
 
 void App::MenuLoop() {
+	
 }

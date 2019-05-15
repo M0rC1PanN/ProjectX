@@ -11,7 +11,8 @@ App::App()
 	Window = nullptr;
 	renderer = nullptr;
 	Running = true;
-	background = nullptr;
+	menu_background = nullptr;
+
 }
 
 int App::StartGame()
@@ -32,12 +33,12 @@ int App::StartGame()
 			{
 				onEvent(&CurEvent);
 			}
-			if (!menu) {
+			if (!flags["ESCAPE"]) {
 				Loop();
 				Render();
 			}
 			else {
-				MenuLoop();
+				MenuRender();
 			}
 		}
 	}

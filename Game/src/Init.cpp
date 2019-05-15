@@ -4,7 +4,7 @@
 
 bool App::Init()
 {
-
+	flags["ESCAPE"] = true;
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 	{
 		std::cout << "ERROR: " << SDL_GetError() << "\n";
@@ -32,11 +32,9 @@ bool App::Init()
 		return false;
 	}
 
-
-	Generator();
-
-	background = LoadImage("Pictures/background.bmp", renderer);
-	if (background == nullptr) {
+	menu_background = LoadImage("Pictures/background.bmp", renderer);
+	SDL_QueryTexture(menu_background, NULL, NULL, &background_width, &background_height);
+	if (menu_background == nullptr) {
 		std::cout << SDL_GetError() << std::endl;
 		return false;
 	}
