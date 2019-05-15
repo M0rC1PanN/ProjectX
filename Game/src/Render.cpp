@@ -32,9 +32,13 @@ void App::Render()
 
 void App::MenuRender() {
 	SDL_RenderClear(renderer);
-	//background = LoadImage("Pictures/background.bmp", renderer);
-	DrawTexture(menu_background, renderer, 300, 100, 0, 0, background_width, background_height);
-	//SDL_SetRenderDrawColor(renderer, 55, 55, 55, 155);
+	DrawTexture(menu_background, renderer, 100, 100, 0, 0, background_width, background_height);
+	for (int i = 0; i < 4; ++i) {
+		DrawTexture(menu_buttons, renderer, 
+			WWIDTH / 2 - 100, WHEIGHT / 2 - 300 + i*BYDELTA,
+			0, i * BHEIGHT, 
+			BWIDTH, BHEIGHT);
+	}
 	SDL_RenderPresent(renderer);
 	SDL_Delay(1);
 }

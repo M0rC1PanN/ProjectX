@@ -31,6 +31,7 @@ private:
 	SDL_Surface*						ScreenSurface;
 	SDL_Window*							Window;
 	SDL_Texture*						menu_background;
+	SDL_Texture*						menu_buttons;
 	SDL_Renderer*						renderer;
 	std::map < std::string, bool >		flags;
 	Instruments							tools;

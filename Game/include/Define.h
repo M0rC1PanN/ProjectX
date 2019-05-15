@@ -11,6 +11,11 @@
 #define WWIDTH					1920.f
 #define WHEIGHT					1088.f
 
+
+#define BWIDTH					256
+#define BHEIGHT					144
+#define BYDELTA					(BHEIGHT + 5)
+
 #define FPS						60
 
 #define EntityWidht				32

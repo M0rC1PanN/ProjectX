@@ -12,9 +12,71 @@ void App::OnExit() {
 }
 
 void App::OnLButtonUp(int mX, int mY) {
+	if (flags["ESCAPE"]) {
+		if (mX >= WWIDTH / 2 - 100 && mX <= WWIDTH / 2 - 100 + BWIDTH
+			&& mY >= WHEIGHT / 2 - 300 && mY <= WHEIGHT / 2 - 300 + BHEIGHT) {
+			SDL_Delay(100);
+			Generator();
+			flags["ESCAPE"] = false;
+		}
+		if (mX >= WWIDTH / 2 - 100 && mX <= WWIDTH / 2 - 100 + BWIDTH
+			&& mY >= WHEIGHT / 2 - 300 + BYDELTA && mY <= WHEIGHT / 2 - 300 + BHEIGHT + BYDELTA) {
+			SDL_Delay(100);
+			flags["ESCAPE"] = false;
+		}
+		if (mX >= WWIDTH / 2 - 100 && mX <= WWIDTH / 2 - 100 + BWIDTH
+			&& mY >= WHEIGHT / 2 - 300 + 2 * BYDELTA &&
+			mY <= WHEIGHT / 2 - 300 + BHEIGHT + 2 * BYDELTA) {
+			SDL_Delay(100);
+			Running = 0;
+		}
+		if (mX >= WWIDTH / 2 - 100 && mX <= WWIDTH / 2 - 100 + BWIDTH
+			&& mY >= WHEIGHT / 2 - 300 + 3 * BYDELTA &&
+			mY <= WHEIGHT / 2 - 300 + BHEIGHT + 3 * BYDELTA) {
+			SDL_Delay(100);
+			Running = 0;
+		}
+		return;
+	}
 }
 
 void App::OnLButtonDown(int mX, int mY) {
+	if (flags["ESCAPE"]) {
+		if (mX >= WWIDTH / 2 - 100 && mX <= WWIDTH / 2 - 100 + BWIDTH
+			&& mY >= WHEIGHT / 2 - 300 && mY <= WHEIGHT / 2 - 300 + BHEIGHT) {
+			DrawTexture(menu_buttons, renderer,
+				WWIDTH / 2 - 100, WHEIGHT / 2 - 300,
+				BWIDTH, 0,
+				BWIDTH, BHEIGHT);
+		}
+		if (mX >= WWIDTH / 2 - 100 && mX <= WWIDTH / 2 - 100 + BWIDTH
+			&& mY >= WHEIGHT / 2 - 300 + BYDELTA && mY <= WHEIGHT / 2 - 300 + BHEIGHT + BYDELTA) {
+			DrawTexture(menu_buttons, renderer,
+				WWIDTH / 2 - 100, WHEIGHT / 2 - 300 + BYDELTA,
+				BWIDTH, BHEIGHT,
+				BWIDTH, BHEIGHT);
+		}
+		if (mX >= WWIDTH / 2 - 100 && mX <= WWIDTH / 2 - 100 + BWIDTH
+			&& mY >= WHEIGHT / 2 - 300 + 2 * BYDELTA &&
+			mY <= WHEIGHT / 2 - 300 + BHEIGHT + 2 * BYDELTA) {
+			DrawTexture(menu_buttons, renderer,
+				WWIDTH / 2 - 100, WHEIGHT / 2 - 300 + 2 * BYDELTA,
+				BWIDTH, 2 * BHEIGHT,
+				BWIDTH, BHEIGHT);
+		}
+		if (mX >= WWIDTH / 2 - 100 && mX <= WWIDTH / 2 - 100 + BWIDTH
+			&& mY >= WHEIGHT / 2 - 300 + 3 * BYDELTA &&
+			mY <= WHEIGHT / 2 - 300 + BHEIGHT + 3 * BYDELTA) {
+			DrawTexture(menu_buttons, renderer,
+				WWIDTH / 2 - 100, WHEIGHT / 2 - 300 + 3 * BYDELTA,
+				BWIDTH, 3 * BHEIGHT,
+				BWIDTH, BHEIGHT);
+		}
+		SDL_RenderPresent(renderer);
+		SDL_Delay(500);
+		return;
+	}
+	
 	int x = round(Camera::CameraControl.GetX()) + mX / TILE_SIZE, y = round(Camera::CameraControl.GetY()) + mY / TILE_SIZE;
 	if (fabs(Hero.X - x) <= 2 && fabs(Hero.Y - y) <= 2 &&
 		x >= 0 && x < MAP_WBLOCK && y >= 0 && y < MAP_HBLOCK &&

@@ -39,6 +39,12 @@ bool App::Init()
 		return false;
 	}
 
+	menu_buttons = LoadImage("Pictures/buttons.bmp", renderer);
+	if (menu_buttons == nullptr) {
+		std::cout << SDL_GetError() << std::endl;
+		return false;
+	}
+
 	if (Hero.OnLoad("Pictures/yoshi.bmp", renderer, EntityWidht, EntityHeight, 8) == false) {
 		return false;
 	}
