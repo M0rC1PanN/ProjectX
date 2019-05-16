@@ -9,6 +9,7 @@ Instruments App::tools;
 PlayMode App::mode;
 int App::illumination = 0;
 bool App::menu = true;
+int App::complexity = 0;
 
 App::App()
 {

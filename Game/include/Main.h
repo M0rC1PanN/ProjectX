@@ -44,7 +44,7 @@ public:
 	static PlayMode						mode;
 
 	static int illumination;
-	int complexity = 0;
+	static int complexity;
 	static bool menu;
 public:
 	App();

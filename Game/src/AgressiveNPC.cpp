@@ -22,9 +22,9 @@ void AgressiveNPC::OnLoop() {
 	this->Entity::OnLoop();
 	action tmp = Trigger();
 	int current_diff = abs(App::Game_time.GetTime() - PartDuration / 2);
-	speed_param = ((1.25*current_diff + 1.0*PartDuration / 8) / (1.0*PartDuration / 2)) * 4 * 0.002;
-	overlook = 10 + (1.0*current_diff / (1.0*PartDuration / 2)) * 30;
-	damage = 4 + (1.0*current_diff / (1.0*PartDuration / 2)) * 10;
+	speed_param = (1 + App::complexity*0.5 / 3.0)*((1.25*current_diff + 1.0*PartDuration / 8) / (1.0*PartDuration / 2)) * 4 * 0.002;
+	overlook = 10 + (1 + App::complexity*0.5 / 3.0)*(1.0*current_diff / (1.0*PartDuration / 2)) * 30;
+	damage = 4 + (1 + App::complexity*0.5 / 3.0)*(1.0*current_diff / (1.0*PartDuration / 2)) * 10;
 	if (tmp != NONE) {
 		act = tmp;
 		SeeYou = 1;
