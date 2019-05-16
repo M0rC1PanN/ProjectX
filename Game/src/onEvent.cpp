@@ -17,11 +17,13 @@ void App::OnLButtonUp(int mX, int mY) {
 			&& mY >= WHEIGHT / 2 - 300 && mY <= WHEIGHT / 2 - 300 + BHEIGHT) {
 			SDL_Delay(100);
 			illumination = (illumination + 1) % 2;
+
 		}
 		else if (mX >= WWIDTH / 2 - 100 && mX <= WWIDTH / 2 - 100 + BWIDTH
 			&& mY >= WHEIGHT / 2 - 300 + BYDELTA && mY <= WHEIGHT / 2 - 300 + BHEIGHT + BYDELTA) {
 			SDL_Delay(100);
 			complexity = (complexity + 1) % 4;
+
 		}
 		else if (mX >= WWIDTH / 2 - 100 && mX <= WWIDTH / 2 - 100 + BWIDTH
 			&& mY >= WHEIGHT / 2 - 300 + 2 * BYDELTA &&

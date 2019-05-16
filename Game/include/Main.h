@@ -43,8 +43,9 @@ public:
 	static GameTime						Game_time;
 	static PlayMode						mode;
 
-	int illumination = 0;
+	static int illumination;
 	int complexity = 0;
+	static bool menu;
 public:
 	App();
 	~App() {};

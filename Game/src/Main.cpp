@@ -7,6 +7,8 @@ MainHero App::Hero;
 GameTime App::Game_time;
 Instruments App::tools;
 PlayMode App::mode;
+int App::illumination = 0;
+bool App::menu = true;
 
 App::App()
 {
@@ -35,6 +37,7 @@ int App::StartGame()
 			{
 				onEvent(&CurEvent);
 			}
+			menu = flags["ESCAPE"];
 			if (!flags["ESCAPE"]) {
 				if (flags["TAB"]) {
 					MinimapRender();

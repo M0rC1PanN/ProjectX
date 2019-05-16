@@ -60,8 +60,12 @@ bool DrawTexture(SDL_Texture* tex, SDL_Renderer* rend, float X, float Y, float X
 	SrcR.y = Y2;
 	SrcR.w = W;
 	SrcR.h = H;
-
-	// ChooseColor(tex, X, Y);
+	if (App::illumination && !App::menu) {
+		ChooseColor(tex, X, Y);
+	}
+	else {
+		SDL_SetTextureColorMod(tex, 255, 255, 255);
+	}
 	SDL_RenderCopy(rend, tex, &SrcR, &DestR);
 	return true;
 }
