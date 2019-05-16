@@ -36,6 +36,7 @@ bool Map::OnLoad(std::string File, SDL_Renderer* renderer)
 			fscanf(FileMap, "%d:%d ", &MAP[i][j].TextureID, &MAP[i][j].TypeID);
 		}
 	}
+
 	fclose(FileMap);
 	return true;
 }
@@ -54,9 +55,22 @@ void Map::OnRender(SDL_Renderer* renderer, float MapX, float MapY)
 			if (curX < MAP_WBLOCK && curY < MAP_HBLOCK && curX >= 0 && curY >= 0 && MAP[curX][curY].TypeID != TILE_TYPE_NONE) {
 				if (MAP[curX][curY].TextureID != TILE_TEXT_NONE) {
 					float cut_size = 2;
-					visible_blocks[X][Y] = true;
-					width_of_minimap = std::max(width_of_minimap, X * 5);
-					height_of_minimap = std::max(height_of_minimap, Y * 5);
+					if (!at_least_one_block_is_seen) {
+						minimal_visible_block_x = X;
+						minimal_visible_block_y = Y;
+						maximal_visible_block_x = X;
+						maximal_visible_block_y = Y;
+						visible_blocks[X][Y] = true;
+						at_least_one_block_is_seen = true;
+					}
+					else {
+						minimal_visible_block_x = std::min(std::max(X, App::Hero.X - 960 / 5), minimal_visible_block_x);
+						minimal_visible_block_y = std::min(std::max(Y, App::Hero.Y - 540 / 5), minimal_visible_block_y);
+						maximal_visible_block_x = std::max(std::min(X, App::Hero.X + 960 / 5), maximal_visible_block_x);
+						maximal_visible_block_y = std::max(std::min(Y, App::Hero.Y + 540 / 5), maximal_visible_block_y);
+						visible_blocks[X][Y] = true;
+
+					}
 					for (float i = 0; i < cut_size; ++i) {
 						for (float j = 0; j < cut_size; ++j) {
 							DrawTexture(Tiles_Textures, renderer, X1 + i * TILE_SIZE / cut_size, Y1 + j * TILE_SIZE / cut_size, 0 + i * TILE_SIZE / cut_size, MAP[curX][curY].TextureID * TILE_SIZE + j * TILE_SIZE / cut_size, TILE_SIZE / cut_size, TILE_SIZE / cut_size);
@@ -89,16 +103,21 @@ void Map::InitializeWithFalse() {
 	}
 }
 
+
 void Map::MinimapOnRender(SDL_Renderer* renderer) {
-	for (float x = 1; x < MAP_WBLOCK - 1; x++) {
-		for (float y = 0; y < MAP_HBLOCK - 1; y++) {
+	float X = (maximal_visible_block_x + minimal_visible_block_x) / 2;
+	float Y = (minimal_visible_block_y + maximal_visible_block_y) / 2;
+	float tmp_x = 1;
+	float one_more_tmp_x = MAP_WBLOCK - 1;
+	for (float x = std::max(minimal_visible_block_x, tmp_x); x < std::min(one_more_tmp_x, maximal_visible_block_x); x++) {
+		for (float y = minimal_visible_block_y; y < maximal_visible_block_y; y++) {
 			if (visible_blocks[x][y] && App::Game_Map.MAP[x][y].TypeID == TILE_TYPE_BLOCK) {
-				DrawTexture(Tiles_Textures, renderer, 960 - width_of_minimap / 2 + x * 5, 540 - height_of_minimap / 2 + y * 5, 3, 3, 5, 5);
+				DrawTexture(Tiles_Textures, renderer, 960 - (X - x) * 5, 540 - (Y - y) * 5, 3, 3, 5, 5);
 				//DrawTexture(menu_background, renderer, 300, 100, 0, 0, backgrou nd_width, background_height);
 			}
 		}
 	}
 	SDL_Texture* pers = LoadImage("Pictures/Green.bmp", renderer);
-	DrawTexture(pers, renderer, 960 - width_of_minimap / 2 + App::Hero.X * 5 - 10, 540 - height_of_minimap / 2 + App::Hero.Y * 5 - 10, 3, 3, 20, 20);
+	DrawTexture(pers, renderer, 960 - (X - App::Hero.X) * 5 - 10, 540 - (Y - App::Hero.Y) * 5 - 10, 3, 3, 20, 20);
 	SDL_DestroyTexture(pers);
 }
